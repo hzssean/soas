@@ -96,7 +96,7 @@ var DimensionList = Backbone.View.extend({
         }
 
          //TODO 更改相应的target
-         if($(event.target).attr("title")=="[Time].[Year]"){
+         if($(event.target).attr("title")=="[DIM_TIME].[DAY]"){
              $axis=$(this.workspace.el).find(".filter ul");}
          else{
          //在此修改

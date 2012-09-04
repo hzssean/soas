@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="GBK" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+    <resultMap  id="selectR" class="org.saiku.web.dao.Save"><!--返回到Save类-->
+        <!--<result property="saveState" column="SAVENAME" />映射关系-->
+        <!--<result property="filename" column="SAVENAME"/>-->
+        <result property="content" column="CONTENT"/>
+    </resultMap>
+
+
+    <select id="selectState" resultClass="java.util.HashMap"><!--必须是具体的实现类，否则iBatis无法实例化-->
+        select * from SAVEDATA
+    </select>
+
+    <select id="selectRecord" resultMap="selectR" parameterClass="java.lang.String"><!--根据uuid读取内容-->
+        select CONTENT from savedata where uuid=#uuid#
+    </select>
+
+    <insert id="insertRecord" parameterClass="java.util.Map"><!--插入需要存储的信息，包括文件名 内容 日期-->
+        insert into savedata values ( #filetmp#,#content#,#ID#)
+    </insert>
+
+    <delete id="deleteRecord" parameterClass="java.lang.String"><!--根据uuid删除-->
+        delete from savedata where uuid=#uuid#
+    </delete>
+
+</sqlMap>

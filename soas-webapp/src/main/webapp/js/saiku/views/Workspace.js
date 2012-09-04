@@ -23,6 +23,7 @@
  */
 var Workspace = Backbone.View.extend({
     className: 'tab_container',
+    init_date:false,
     
     events: {
         'click .sidebar_separator': 'toggle_sidebar',
@@ -246,9 +247,12 @@ var Workspace = Backbone.View.extend({
             });
             $(this.el).find('.measure_tree').html('').append($(this.measure_list.el));
 
-            //TODO 自动添加一个year
-            $('.folder_collapsed[title=Time]').trigger("click");//打开time的文件夹
-            $('.level[title$="[Time].[Year]"]').trigger("click");
+            //TODO 自动添加日期模块
+            if($('.folder_collapsed[title=DIM_TIME]').html()=="DIM_TIME"){
+                $('.folder_collapsed[title=DIM_TIME]').trigger("click");//打开time的文件夹
+                init_date= true;//用以判断是否为第一次打开
+                $('.level[title$="[DIM_TIME].[DAY]"]').trigger("click");
+            }
             return;
             //自动添加一个year
         } else {

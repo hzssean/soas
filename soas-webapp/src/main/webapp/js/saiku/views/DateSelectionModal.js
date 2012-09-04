@@ -1,4 +1,4 @@
-//新增一个date_test,继承Modal
+//TODO 新增一个date_test,继承Modal
 
 var DateSelectionModal= Modal.extend({
     type:"DateSelectionModal",
@@ -31,20 +31,24 @@ var DateSelectionModal= Modal.extend({
     } ,
 
     start_this:function(){
-            $(this.target).parent().children('.selections').datepicker({
+            //$(this.target).parent().children('.selections').datepicker({
+        $('#date').datepicker({//date的input触发的选择日期插件
                 changeYear:true,
                 changeMonth:true,
                 showButtonPanel:true,
-                //closeText:true,
-                gotoCurrent:true,
+                closeText:"关闭",
+                currentText:"今天",
+                //gotoCurrent:true,
                 dateFormat:'yy-mm-dd',
-                yearRange:'1990:1999',
+                //yearRange:'1990:1999',
             onSelect:function(dateText,inst){
                 year_select=dateText.split('-')[0];//获得年份信息
                 month_select=dateText.split('-')[1];//获得月份信息
                 day_select=dateText.split('-')[2];//获得日期
-                $('.ui-datepicker').remove();
-                $(this).parent().children('.selections ').removeClass("hasDatepicker");
+                //$('.ui-datepicker').remove();
+                $(this).parent().children('.hasDatepicker ').removeClass("hasDatepicker");
+                $('.placeholder ').remove();//修复bug
+
                 //添加save功能
 
                 var updates = [{
@@ -53,7 +57,7 @@ var DateSelectionModal= Modal.extend({
                     type: 'level',
                     action: 'delete'
                 }];
-                var value=unescape(my_member.level.replace("Year",year_select));
+                var value=unescape(my_member.level.replace("DAY",year_select+month_select+day_select));
                 updates.push({
                     uniquename: value,
                     type: 'member',
@@ -68,12 +72,13 @@ var DateSelectionModal= Modal.extend({
                     }
                 });
 
-                return false;
+                //return false; TODO 能正常选择了
                 }
 
 
 
         });
+        $('#date').trigger("focus");
         $('.ui-datepicker').css({position:"absolute"});//使得不被隐藏起来
 
 

@@ -59,7 +59,7 @@
 	</bean>
  <!--  <property name="path" value="file:///var/saiku/saiku-datasources/"/> -->
  
-     <bean id="repository2bean" scope="request" class="org.saiku.web.rest.resources.BasicRepositoryResource2">
+     <bean id="repository2bean" scope="request" class="org.saiku.web.rest.resources.BasicRepositoryResource3">
 		<property name="path" value="res:saiku-repository"/>
 	</bean>
  
@@ -67,6 +67,7 @@
 		<property name="olapQueryService" ref="olapQueryBean" />
 		<property name="path" value="res:saiku-repository"/>
 	</bean>
- 
+
+
 
 </beans>

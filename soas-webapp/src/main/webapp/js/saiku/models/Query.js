@@ -144,6 +144,43 @@ var Query = Backbone.Model.extend({
                 }
             }
         });
+
+        if(init_date){
+            //TODO 尝试使得初始选择当天记录
+            init_date=false;//重置起来
+            var date=new Date();
+            var year_select=date.getFullYear().toString();
+
+            if(date.getMonth()<9){
+                var month_select="0"+(date.getMonth()+1).toString();}
+            else{var month_select=(date.getMonth()+1).toString();}
+
+            if(date.getDate()<10){
+                var day_select="0"+date.getDate().toString();}
+            else{var day_select=date.getDate().toString();}
+
+            var updates=[{
+                hierarchy: dimension.split('/')[2],
+                uniquename:dimension.split('/')[3],
+                type: 'level',
+                action: 'delete'
+            }];
+            updates.push({
+                uniquename: dimension.split('/')[3].replace("DAY",year_select+month_select+day_select),
+                type: 'member',
+                action: 'add'
+            });
+
+            this.action.put('/axis/' + target + '/dimension/' + dimension.split('/')[0], {
+                success:  function() {
+                    this.query.run();
+                },
+                data: {
+                    selections: JSON.stringify(updates)
+                }
+            });
+            //尝试
+        }
     },
     
     url: function() {

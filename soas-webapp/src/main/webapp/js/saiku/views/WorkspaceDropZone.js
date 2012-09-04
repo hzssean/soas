@@ -64,7 +64,12 @@ var WorkspaceDropZone = Backbone.View.extend({
             tolerance: 'pointer',
             
             start: function(event, ui) {
-                ui.placeholder.text(ui.helper.text());
+                if($(this).find('.selections').hasClass("hasDatepicker")){//修复一个bug
+                    ui.placeholder.text("DAY");
+                }
+                else{
+                    ui.placeholder.text(ui.helper.text());
+                }
             }
 
         });
@@ -124,13 +129,13 @@ var WorkspaceDropZone = Backbone.View.extend({
     
     select_dimension: function(event, ui) {
 
-        //TODO 修改判断是不是year
-        if(ui.item.children('a').attr("title")=="[Time].[Year]"){
+        //TODO 修改判断是不是day
+        if(ui.item.children('a').attr("title")=="[DIM_TIME].[DAY]"){
             $axis = ui.item.parents('.workspace_fields').find('.filter');
         }else{
             $axis = ui.item.parents('.fields_list_body');
         }
-        //判断是不是year
+        //修改判断是不是day
         var target = "";
         
         if ($axis.hasClass('rows')) target = "ROWS";
@@ -193,7 +198,7 @@ var WorkspaceDropZone = Backbone.View.extend({
                 target, index);
 
         //TODO 自动弹出过滤的内容
-        if ("FILTER" == target) {
+        if ("FILTER" === target&&$axis.find('a').attr('title')!="[DIM_TIME].[DAY]") {
             var ev = { target : $axis.find('a[href="#' + member + '"]') };
             this.selections(ev, ui);
 
@@ -244,7 +249,7 @@ var WorkspaceDropZone = Backbone.View.extend({
         var $originalItem =  $(myself.workspace.el).find('.sidebar')
                                     .find('a[href="' + member + '"]').parent();
         //TODO 新增一个判断量
-        var test_year = member.replace('#','').split('/')[3];//判断是不是[Time].[Year]
+        var test_year = member.replace('#','').split('/')[3];//判断是不是[DIM_TIME].[DAY]
         //if(test_year!="[Time].[Year]"){
         var insertElement = $(ui.item);
         //}
@@ -255,9 +260,9 @@ var WorkspaceDropZone = Backbone.View.extend({
         var type = $(ui.item).hasClass('d_dimension') ? "d_dimension" : "d_measure";
 
         var sourceAxis = "";
-        if ($axis.hasClass('rows')&&test_year!="[Time].[Year]") sourceAxis = "ROWS";
-        if ($axis.hasClass('columns')&&test_year!="[Time].[Year]") sourceAxis = "COLUMNS";
-        if ($axis.hasClass('filter')||test_year=="[Time].[Year]") sourceAxis = "FILTER";
+        if ($axis.hasClass('rows')&&test_year!="[DIM_TIME].[DAY]") sourceAxis = "ROWS";
+        if ($axis.hasClass('columns')&&test_year!="[DIM_TIME].[DAY]") sourceAxis = "COLUMNS";
+        if ($axis.hasClass('filter')||test_year=="[DIM_TIME].[DAY]") sourceAxis = "FILTER";
         //以上为修改
 
         source = ".rows, .columns, .filter";
@@ -292,8 +297,8 @@ var WorkspaceDropZone = Backbone.View.extend({
         }
 
 
-        //TODO 判断是否是year
-        if(test_year=="[Time].[Year]"){
+        //TODO 判断是否是day
+        if(test_year=="[DIM_TIME].[DAY]"){
             $originalItem.parent().find('.ui-draggable-disabled').clone().attr('class', 'ui-draggable').removeAttr('style')
                 .addClass(type)
                 .appendTo('div.filter ul.connectable');
@@ -380,10 +385,14 @@ var WorkspaceDropZone = Backbone.View.extend({
         var key = $target.attr('href').replace('#', '');
 
         //TODO 判断是否年，如果是改为弹出日期控件datepicker
-        if($target.attr("title")=="[Time].[Year]"){
+        if($target.attr("title")=="[DIM_TIME].[DAY]"){
             var year_select="";
             var month_select="";
             var day_select="";
+            if(!$target.parent().children('#date').is("input")){
+            //插入一个input,用于触发datepicker
+                $target.parent().children('.selections').after("<input type=\"text\" id=\"date\" style=\"display:none\" />");
+            }
             (new DateSelectionModal({
                 target: $target,
                 name: $target.text(),

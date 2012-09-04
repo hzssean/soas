@@ -301,35 +301,45 @@ var WorkspaceToolbar = Backbone.View.extend({
             this.workspace.query.id + "/export/csv";
     },
 
-    switch_to_mdx: function(event) {
-        $(this.workspace.el).find('.workspace_fields').hide();
-        $(this.el).find('.auto, ,.toggle_fields, .query_scenario, .buckets, .non_empty, .swap_axis, .mdx, .switch_to_mdx').parent().hide();
-        
+    switch_to_mdx: function(event) {//TODO 修改使得能有mdx环境返回到正常环境
+        $(this.workspace.el).find('.workspace_fields').toggle();
+        $(this.el).find('.auto,.toggle_fields, .query_scenario, .buckets, .non_empty, .swap_axis, .mdx /*, .switch_to_mdx*/').parent().toggle();
+        $(this.el).find('.switch_to_mdx').toggleClass("on");
 
-        $(this.el).find('.run').attr('href','#run_mdx');
-        $(this.el).find('.run, .save').removeClass('disabled_toolbar');
+        if( $(this.el).find('.run').attr('href')=='#run_query'){
+            $(this.el).find('.run').attr('href','#run_mdx');
+        }
+        else{
+            $(this.el).find('.run').attr('href','#run_query');
+        }
+        $(this.el).find('.run, .save').toggleClass('disabled_toolbar');
 
         if (Settings.MODE != "view" && Settings.MODE != "table") {
-            $(this.workspace.el).find('.workspace_editor .mdx_input').removeClass('hide');
+            $(this.workspace.el).find('.workspace_editor .mdx_input').toggleClass('hide');
             $(this.workspace.el).find('.mdx_input').width($(this.el).width()-20);
         }
 
 
 
-        if (this.workspace.dimension_list && this.workspace.measure_list) {
+       /* if (this.workspace.dimension_list && this.workspace.measure_list) {
             $(this.workspace.dimension_list.el).find('ul li a').css({fontWeight: "normal"});
             $(this.workspace.measure_list.el).find('ul li a').css({fontWeight: "normal"});
             $(this.workspace.dimension_list.el).find('.measure,.dimension').parent('li').draggable('enable');
             $(this.workspace.measure_list.el).find('.measure,.dimension').parent('li').draggable('enable');
         }
-        this.activate_buttons({ workspace: this.workspace });
+        this.activate_buttons({ workspace: this.workspace });*/
         $(this.workspace.toolbar.el)
-                .find('.run')
+                .find('.save')//TODO 可保存，不可变，无法实现mdx下的操作
                 .removeClass('disabled_toolbar');
 
         $(this.workspace.table.el).empty();
         this.workspace.adjust();
-        this.post_mdx_transform();
+        if( $(this.el).find('.run').attr('href')=='#run_query'){
+            this.workspace.query.set({type:'QM', formatter: "flattened" });
+        }
+        else{
+            this.post_mdx_transform();
+        }
 
     },
 
@@ -344,7 +354,7 @@ var WorkspaceToolbar = Backbone.View.extend({
         this.workspace.query.action.get("/mdx", { 
             success: function(model, response) {
                 $(self.workspace.el).find(".mdx_input").val(response.mdx);
-                self.workspace.query.action.post("/qm2mdx", { success: transformed } );
+               //屏蔽以测试 self.workspace.query.action.post("/qm2mdx", { success: transformed } );
 
             }
         });

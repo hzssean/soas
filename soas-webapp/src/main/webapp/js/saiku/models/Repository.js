@@ -46,7 +46,7 @@ var SavedQuery = Backbone.Model.extend({
     
     move_query_to_workspace: function(model, response) {
         var file = response;
-        var filename = model.get('file');
+        var filename = model.get(/*'file'*/'name');//TODO 改动这里使标题栏显示名称，看是否有bug
         for (var key in Settings) {
             if (key.match("^PARAM")=="PARAM") {
                 var variable = key.substring("PARAM".length, key.length)

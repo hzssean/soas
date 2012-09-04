@@ -59,9 +59,7 @@ import org.springframework.stereotype.Component;
  * @author Paul Stoellberger
  *
  */
-@Component
-@Path("/saiku/{username}/repository2")
-@XmlAccessorType(XmlAccessType.NONE)
+
 public class BasicRepositoryResource2 {
 
 	private static final Logger log = LoggerFactory.getLogger(BasicRepositoryResource2.class);

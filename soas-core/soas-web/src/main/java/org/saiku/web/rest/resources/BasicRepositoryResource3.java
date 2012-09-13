@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
+import org.saiku.web.bean.ResourceBean;
 import org.saiku.web.rest.objects.repository.IRepositoryObject;
 import org.saiku.web.rest.objects.repository.RepositoryFileObject;
 import org.slf4j.Logger;
@@ -25,14 +26,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
-import org.saiku.web.dao.*;
+import org.saiku.web.dao.SaveLoadDao;
 
 /*
  * Created with IntelliJ IDEA.
  * User: zhisheng.hzs
  * Date: 12-8-23
  * Time: 上午9:47
- * To change this template use File | Settings | File Templates.
+ * 应用层，通过dao来存取数据库的内容。
  */
 
 
@@ -46,7 +47,7 @@ public class BasicRepositoryResource3 {
     //static boolean conn_bool=false;
     //static Connection conn=null;
     //static Statement stmt=null;
-    static soasDao dao=null;//初始化关于连接oracle的变量
+    static SaveLoadDao dao=null;//初始化关于连接oracle的变量
 
 
 
@@ -57,7 +58,7 @@ public class BasicRepositoryResource3 {
         try{
             ApplicationContext ctx=new ClassPathXmlApplicationContext("soasManager.xml");
             //DataSource dataSource =(DataSource)ctx.getBean("dataSource");//连接池数据源
-            dao=(soasDao)ctx.getBean("soasDao");
+            dao=(SaveLoadDao)ctx.getBean("SaveLoadDao");
             //if(!conn_bool){
                 //InitialContext initCtx=new InitialContext();
                 //DataSource ds=(DataSource)initCtx.lookup("java:comp/env/jdbc/foodmart-ds");//获取数据源
@@ -101,7 +102,7 @@ public class BasicRepositoryResource3 {
         List<IRepositoryObject> saveList = new ArrayList<IRepositoryObject>();//返回已存的情况
         //List<String> SaveName =new ArrayList<String>();//保存获取到的字符串
         try{
-            Save save=null;
+            ResourceBean save=null;
             // rs=stmt.executeQuery("select SAVENAME from SAVEDATA");
             //SaveName=dao.readState();
             List[] state=dao.readState();//获取存储的状态
@@ -146,7 +147,7 @@ public class BasicRepositoryResource3 {
     @Path("/resource")
     public Response load_data(@QueryParam("name") String filetmp,@QueryParam("file") String IDtmp) throws Exception{ //请求中有name与path两个东西，path为file
         try{
-            Save save=new Save(filetmp);//初始化save类
+            ResourceBean save=new ResourceBean(filetmp);//初始化save类
             save.setID(IDtmp);
             //ResultSet rscontent=null;
             byte [] doc=null;
@@ -201,7 +202,7 @@ public class BasicRepositoryResource3 {
 
             stmt.executeUpdate("insert into savedata values ('"+filetmp+"','"+content+"')");//保存储存的内容
             */
-            Save save=new Save(filetmp);
+            ResourceBean save=new ResourceBean(filetmp);
             String s_UUID=UUID.randomUUID().toString();
             save.setID(s_UUID);//保存UUID
             save.setContent(content);//设置好存储的内容
@@ -242,7 +243,7 @@ public class BasicRepositoryResource3 {
     public Status delete_data(@QueryParam("name") String filetmp,@QueryParam("file") String IDtmp) throws Exception{
         try{
             //stmt.executeUpdate("delete from savedata where SAVENAME='" + filetmp + "'");//删除相应的文件
-            Save save=new Save(filetmp);
+            ResourceBean save=new ResourceBean(filetmp);
             save.setID(IDtmp);//设置好ID
             dao.deleteRecord(save);//删除相应文件
             return Status.OK;

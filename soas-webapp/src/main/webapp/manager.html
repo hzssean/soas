@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>ADC - manager - mode</title>
+    <!--
+    <meta content="true" name="svg.render.forceflash">
+    <link media="screen, projection" type="text/css" href="css/blueprint/src/reset.css" rel="stylesheet">
+    <link media="screen, projection" type="text/css" href="css/blueprint/src/typography.css" rel="stylesheet">
+    <link media="screen, projection" type="text/css" href="css/blueprint/src/forms.css" rel="stylesheet">
+    <link media="screen" type="text/css" href="js/jquery/jquery.contextMenu.css" rel="stylesheet">
+    <link media="all" type="text/css" href="css/base/jquery-ui-1.8.22.custom.css" rel="stylesheet">
+    <link media="screen" type="text/css" href="js/fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet">
+    -->
+    <script  src="js/jquery/jquery.min.js"></script>
+    <script  src="js/saiku/manager/Manager.js"></script>
+    <link media="screen, projection" type="text/css" href="css/blueprint/src/reset.css" rel="stylesheet">
+    <link type="text/css" href="css/saiku/src/styles.css" rel="stylesheet">
+    <link href="favicon.ico" rel="shortcut icon">
+    <style type="text/css">
+        body{font: 12px/14px Geneva,"微软雅黑",Tahoma,sans-serif;}
+
+        .item{
+            text-align: right;
+            float: left;
+            width: 35%;
+            padding-right: 5px;
+        }
+        .box{
+            padding: 10px;
+        }
+       .box_1,.box_3,.box_5,.submit{
+            background-color: #e0e0e0;
+        }
+        .input_txt{
+            width:30%;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="toolbar">
+        <ul>
+            <li>
+            <a id="manager_database" href="/saiku/index.html" title="退出管理页面" style="background-image: url(/saiku/images/src/main_toolbar_on_off.png); background-repeat: no-repeat; background-position:center;width: 30px; height: 30px; float:left;"></a>
+            </li>
+            <li>
+            <a id="handle_database" href="/saiku/handle.html" title="处理页面" style="background-image: url(/saiku/images/src/toolbar_handle.png); background-repeat: no-repeat;background-position:center; width: 30px; height: 30px; float:left;"></a>
+            </li>
+        </ul>
+    </div>
+
+    <div id="tab_panel" style=" height:100%;">
+        <div class="tab_container" style=" height:100%;">
+            <div class="workspace" style=" height:100%;">
+                <div class="workspace_inner" style=" height:100%;">
+
+
+
+                    <!--连接区域-->
+                    <div id="new_connection_config" class="workspace_results" style=" height:90%;">
+                        <div id="new_connection"><img id="img1" src="/saiku/images/src/dialog_login_red.png" height="40px" width="40px">新建连接</div>
+                        <div style="position: relative;">
+                            <!--表单区域-->
+                            <form id="myForm" action="rest/saiku/database/save" method="post" class="data_source">
+                                <div class="box box_1">
+                                    <div class="item">连接名称</div>
+                                    <div class="info">
+                                        <div><input id="con_name" type="text" class="input_txt" name="con_name"  required="required"/></div>
+                                    </div>
+                                </div>
+                                <div class="box box_2">
+                                    <div class="item">数据库类型</div>
+                                    <div class="info">
+                                        <div><!--<input type="text" class="input_txt" name="con_type" />-->
+                                            <select id="con_type" name="con_type" class="input_txt" required="required">
+                                                <option value="">请选择</option>
+                                                <option value="Oracle">Oracle</option>
+                                                <option value="MySQL">MySQL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box box_25 hide">
+                                    <div class="item">数据库驱动</div>
+                                    <div class="info">
+                                        <div><input id="con_driver" type="text" class="input_txt " name="con_driver" disabled="true" /></div>
+                                    </div>
+                                </div>
+                                <div class="box box_3">
+                                    <div class="item">数据库服务器地址</div>
+                                    <div class="info">
+                                        <div><input id="con_server" type="text" class="input_txt" name="con_server" required="required" /></div>
+                                    </div>
+                                </div>
+                                <div class="box box_4">
+                                    <div class="item">数据库端口</div>
+                                    <div class="info">
+                                        <div><input id="con_port" type="text" class="input_txt" name="con_port"  required="required"/></div>
+                                    </div>
+                                </div>
+                                <div class="box box_5">
+                                    <div class="item">用户名</div>
+                                    <div class="info">
+                                        <div><input id="user" type="text" class="input_txt" name="user"  required="required"/></div>
+                                    </div>
+                                </div>
+                                <div class="box box_6">
+                                    <div class="item">密码</div>
+                                    <div class="info">
+                                        <div><input id="password" type="text" class="input_txt" name="password" required="required" /></div>
+                                    </div>
+                                </div>
+                                <div class="box submit">
+                                    <div class="item">*</div>
+                                    <div class="info">
+                                        <div><input id="sent"  type="submit" value="保存" ><input id="reset" type="reset" value="重置"></div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <!--显示已保存的数据库配置的内容-->
+                    <div id="show_connection_config" class="workspace_results hide">
+                        <div id="toolbars" style=" height:40px">
+                            <a id="re_set" style="background-image: url(/saiku/images/src/toolbar_new.png); width: 40px; height: 40px; float:left; background-repeat: no-repeat;" title="新增连接" href="#"></a>
+                            <a id="delete_con" style="background-image: url(/saiku/images/src/delete.png); width: 40px; height: 40px; float:left; background-repeat: no-repeat; background-position: center;" title="删除该配置" href="#"></a>
+
+                        </div>
+                        <div id="img2_content"></div>
+
+
+                        <div class="box box_1">
+                            <div class="item">连接名称</div>
+                            <div class="information">
+                                <div><input id="con_name_" type="text" class="input_txt "  disabled="true" /></div>
+                            </div>
+                        </div>
+                        <div class="box box_2">
+                            <div class="item">数据库类型</div>
+                            <div class="information">
+                                <div><input id="con_type_" type="text" class="input_txt "  disabled="true" /></div>
+                            </div>
+                        </div>
+                        <div class="box box_25">
+                            <div class="item">数据库驱动</div>
+                            <div class="information">
+                                <div><input id="con_driver_" type="text" class="input_txt "  disabled="true" /></div>
+                            </div>
+                        </div>
+                        <div class="box box_3">
+                            <div class="item">数据库服务器地址</div>
+                            <div class="information">
+                                <div><input id="con_server_" type="text" class="input_txt "  disabled="true" /></div>
+                            </div>
+                        </div>
+                        <div class="box box_4">
+                            <div class="item">数据库端口</div>
+                            <div class="information">
+                                <div><input id="con_port_" type="text" class="input_txt "  disabled="true" /></div>
+                            </div>
+                        </div>
+                        <div class="box box_5">
+                            <div class="item">用户名</div>
+                            <div class="information">
+                                <div><input id="user_" type="text" class="input_txt "  disabled="true" /></div>
+                            </div>
+                        </div>
+                        <div class="box box_6">
+                            <div class="item">密码</div>
+                            <div class="information">
+                                <div><input id="password_" type="text" class="input_txt "  disabled="true" /></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="sidebar queries" style="height: 596px;">
+                <h3 class="top i18n i18n_failed i18n_translated">
+                    连接配置
+                </h3>
+                <div class="sidebar_inner">
+
+                </div>
+            </div>
+
+            <div class="sidebar_separator" style="height:100%;"></div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</body>
+</html>

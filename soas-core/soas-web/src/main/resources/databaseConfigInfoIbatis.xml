@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GBK" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+    <insert id="insertInfo" parameterClass="java.util.Map"><!--插入需要存储的信息，包括连接名 类型 服务器 端口 用户 密码-->
+        insert into data_source_config_info values ( #source_name#,#source_type#,#server#,#port#, #userid#,#password#)
+    </insert>
+
+    <select id="showInfo" resultClass="java.util.HashMap"><!--读取已存的数据库信息，必须是具体的实现类，否则iBatis无法实例化-->
+        select * from data_source_config_info
+    </select>
+
+    <delete id="deleteInfo" parameterClass="java.lang.String"><!--根据uuid删除-->
+        delete from data_source_config_info where NAME=#NAME#
+    </delete>
+</sqlMap>

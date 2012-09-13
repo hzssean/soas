@@ -44,12 +44,32 @@
         </property>
     </bean>
 
-    <bean id="soasDao" class="org.saiku.web.dao.soasDao">
+    <bean id="sqlMapClient2" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean" >
+        <property name="configLocation">
+            <value>classpath:sqlMapConfig2.xml</value>
+        </property>
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+    </bean>
+
+    <!--save-and-load-->
+    <bean id="SaveLoadDao" class="org.saiku.web.dao.SaveLoadDao">
         <property name="dataSource">
             <ref bean="dataSource"/>
         </property>
         <property name="sqlMapClient">
             <ref local="sqlMapClient"/>
+        </property>
+    </bean>
+
+    <!--manager-mode-->
+    <bean id="DatabaseInfoDao" class="org.saiku.web.dao.DatabaseInfoDao">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+        <property name="sqlMapClient">
+            <ref local="sqlMapClient2"/>
         </property>
     </bean>
 

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>ADC - handle - mode</title>
+    <script  src="js/jquery/jquery.min.js"></script>
+    <script  src="js/saiku/manager/Handle.js"></script>
+    <link media="screen, projection" type="text/css" href="css/blueprint/src/reset.css" rel="stylesheet">
+    <link type="text/css" href="css/saiku/src/styles.css" rel="stylesheet">
+    <link href="favicon.ico" rel="shortcut icon">
+
+    <style type="text/css">
+        body{font: 12px/14px Geneva,"微软雅黑",Tahoma,sans-serif;}
+
+        .item{
+            text-align: right;
+            float: left;
+            width: 35%;
+            padding-right: 5px;
+        }
+        .box{
+            padding: 10px;
+        }
+        .box_1,.box_3,.box_5,.submit{
+            background-color: #e0e0e0;
+        }
+        .input_txt{
+            width:30%;
+        }
+    </style>
+</head>
+<body>
+<div id="toolbar">
+    <ul><li>
+    <a id="manager_database" href="/saiku/index.html" title="退出处理页面" style="background-image: url(/saiku/images/src/main_toolbar_on_off.png); background-repeat: no-repeat; background-position:center;width: 30px; height: 30px;"></a>
+    </li></ul>
+</div>
+
+<div id="tab_panel" style=" height:100%;">
+    <div class="tab_container" style=" height:100%;">
+        <div class="workspace" style=" height:100%;">
+            <div class="workspace_inner" style=" height:100%;">
+                <!--连接区域-->
+                <div id="new_connection_config" class="workspace_results" style=" height:90%;">
+                </div>
+
+                <!--显示已保存的数据库配置的内容-->
+                <div id="show_connection_config" class="workspace_results hide">
+                    <div class="box box_1">
+                        <div class="item">连接名称</div>
+                        <div class="information">
+                            <div><input id="con_name_" type="text" class="input_txt "  disabled="true" /></div>
+                        </div>
+                    </div>
+                    <div class="box box_2">
+                        <div class="item">数据库类型</div>
+                        <div class="information">
+                            <div><input id="con_type_" type="text" class="input_txt "  disabled="true" /></div>
+                        </div>
+                    </div>
+                    <div class="box box_25">
+                        <div class="item">数据库驱动</div>
+                        <div class="information">
+                            <div><input id="con_driver_" type="text" class="input_txt "  disabled="true" /></div>
+                        </div>
+                    </div>
+                    <div class="box box_3">
+                        <div class="item">数据库服务器地址</div>
+                        <div class="information">
+                            <div><input id="con_server_" type="text" class="input_txt "  disabled="true" /></div>
+                        </div>
+                    </div>
+                    <div class="box box_4">
+                        <div class="item">数据库端口</div>
+                        <div class="information">
+                            <div><input id="con_port_" type="text" class="input_txt "  disabled="true" /></div>
+                        </div>
+                    </div>
+                    <div class="box box_5">
+                        <div class="item">用户名</div>
+                        <div class="information">
+                            <div><input id="user_" type="text" class="input_txt "  disabled="true" /></div>
+                        </div>
+                    </div>
+                    <div class="box box_6">
+                        <div class="item">密码</div>
+                        <div class="information">
+                            <div><input id="password_" type="text" class="input_txt "  disabled="true" /></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="sidebar queries" style="height: 596px;">
+            <h3 class="top i18n i18n_failed i18n_translated">
+                连接信息
+            </h3>
+            <div class="sidebar_inner dimension_tree">
+              <ul></ul>
+            </div>
+        </div>
+
+        <div class="sidebar_separator" style="height:100%;"></div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+</body>
+</html>

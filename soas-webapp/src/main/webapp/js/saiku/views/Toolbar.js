@@ -40,6 +40,8 @@ var Toolbar = Backbone.View.extend({
                     "<li class='separator'>&nbsp;</li>" +
                     "<li><a id='logout' href='#logout' title='Logout' class='logout i18n sprite'></a></li>" +
                     "<li><a id='about' href='#about' title='About' class='about i18n sprite'></a></li>" +
+            //TODO 新增按钮，转跳到manager页面
+                    "<li><a id='manager_database' href='/saiku/manager.html' title='管理页面' style='background-image: url(/saiku/images/src/toolbar_manage.png)'></li>"+
                     //"<li class='separator'>&nbsp;</li>" +
                     //"<li><a id='issue_tracker' href='#issue_tracker' title='Issue Tracker' class='bug i18n sprite'></a></li>" +
                 "</ul>"// +

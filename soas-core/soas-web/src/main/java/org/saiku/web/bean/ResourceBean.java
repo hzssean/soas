@@ -1,8 +1,5 @@
-package org.saiku.web.dao;
+package org.saiku.web.bean;
 
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.List;
 /**
  * Created with IntelliJ IDEA.
  * User: zhisheng.hzs
@@ -12,13 +9,13 @@ import java.util.List;
  */
 
 /*数据类*/
-public class Save implements Isave{
+public class ResourceBean implements IResourceBean {
     private String content;//储存内容
     private String filename;//文件名
     private String ID;//存储ID
    // private ArrayList<String> saveState;//存储状况
-   public Save(){}
-   public Save( String filename){
+   public ResourceBean(){}
+   public ResourceBean(String filename){
        this.filename=filename;
 
    }

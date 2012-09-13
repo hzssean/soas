@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap>
-    <resultMap  id="selectR" class="org.saiku.web.dao.Save"><!--返回到Save类-->
+    <resultMap  id="selectR" class="org.saiku.web.bean.ResourceBean"><!--返回到Save类-->
         <!--<result property="saveState" column="SAVENAME" />映射关系-->
         <!--<result property="filename" column="SAVENAME"/>-->
         <result property="content" column="CONTENT"/>

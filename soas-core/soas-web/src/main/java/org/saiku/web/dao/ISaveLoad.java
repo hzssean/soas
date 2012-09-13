@@ -1,7 +1,8 @@
 package org.saiku.web.dao;
 
+import org.saiku.web.bean.ResourceBean;
+
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,10 +13,10 @@ import java.util.Map;
  */
 
 
-public interface Idao {
-    public void deleteRecord(Save save);
-    public void insertRecord(Save save);
-    public Save  readRecord(Save save);
+public interface ISaveLoad {
+    public void deleteRecord(ResourceBean save);
+    public void insertRecord(ResourceBean save);
+    public ResourceBean readRecord(ResourceBean save);
     //public List readState();
     public List[] readState();
 

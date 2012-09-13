@@ -1,4 +1,4 @@
-package org.saiku.web.dao;
+package org.saiku.web.bean;
 
 /**
  * Created with IntelliJ IDEA.
@@ -7,7 +7,7 @@ package org.saiku.web.dao;
  * Time: 下午4:15
  * To change this template use File | Settings | File Templates.
  */
-public interface Isave {
+public interface IResourceBean {
     public String getFilename();
     public void setFilename(String filename);
     public String getContent();
